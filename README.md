@@ -14,16 +14,16 @@
 
 *Módulo 2:*
 
-- [x] Cadastro de conta
-- [x] Validando CPF existente
-- [x] Listando extrato
-- [x] Validando a conta
-- [x] Middlewares
-- [x] Criando depósito na conta
-- [x] Criando saque na conta
-- [x] Listar extrato bancário por data
-- [x] Atualizar conta
-- [x] Remover conta
+- [ ] Cadastro de conta
+- [ ] Validando CPF existente
+- [ ] Listando extrato
+- [ ] Validando a conta
+- [ ] Middlewares
+- [ ] Criando depósito na conta
+- [ ] Criando saque na conta
+- [ ] Listar extrato bancário por data
+- [ ] Atualizar conta
+- [ ] Remover conta
 
 **Mapa de Jornada [Chapter 02]**
 

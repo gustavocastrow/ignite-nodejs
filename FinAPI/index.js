@@ -31,11 +31,14 @@ app.post("/account", (request, response) => {
 });
 
 //Buscando extrato bancario de um cliente
-app.get("/statement/:cpf", (request, response) => {
-    const { cpf } = request.params;
-
-    //const customer = customers.find((customer) => customer.cpf == cpf);
+app.get("/statement", (request, response) => {
+    const { cpf } = request.headers;
+    
     const customer = customers.find((customer) => customer.cpf === parseInt(cpf));
+
+    if(!customer) {
+        return response.status(400).json({ error: "Customer not found!"})
+    }
 
     return response.json(customer.statement);
 });

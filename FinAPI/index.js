@@ -6,15 +6,22 @@ const customers = [];
 
 app.use(express.json());
 
-//Criando um conta
-//CPF -> string
-//NAME -> string
-//ID -> uuid
-//Statement -> [] (extrato da conta)
+//Middleware
+function verifyIfExistsAccountCPF(request, response, next){
+    const { cpf } = request.headers;
+    const customer = customers.find((customer) => customer.cpf === parseInt(cpf));
+
+    if(!customer) {
+        return response.status(400).json({ error: "Customer not found!"})
+    }
+
+    request.customer = customer;
+    return next();
+}
 
 app.post("/account", (request, response) => {
     const {cpf, name} = request.body;
-    const customerAlreadyExists = customers.some((customer) => customer.cpf = cpf);
+    const customerAlreadyExists = customers.some((customer) => customer.cpf === cpf);
 
     if(customerAlreadyExists){
         return response.status(400).json({error: "Customers already exists!"});
@@ -30,16 +37,10 @@ app.post("/account", (request, response) => {
     return response.status(201).send();
 });
 
-//Buscando extrato bancario de um cliente
-app.get("/statement", (request, response) => {
-    const { cpf } = request.headers;
-    
-    const customer = customers.find((customer) => customer.cpf === parseInt(cpf));
+//app.use(verifyIfExistsAccountCPF); -> quando eu quero que todas as rotas da aplicação utilizem o middleware
 
-    if(!customer) {
-        return response.status(400).json({ error: "Customer not found!"})
-    }
-
+app.get("/statement", verifyIfExistsAccountCPF, (request, response) => {
+    const { customer } = request;
     return response.json(customer.statement);
 });
 
